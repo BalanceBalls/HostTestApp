@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+  <script>
+  function validateAlpha(){
+      var textInput = document.getElementById("inputTextField").value;
+      textInput = textInput.replace(/[^A-Za-z0-9]/g, "");
+      document.getElementById("inputTextField").value = textInput;
+  }
+  </script>
+
+</head>
+<body class="container">
+	<header>
+    <p align="left">Hello, <% if (typeof user["name"] !== 'undefined') {%> <%- user["name"] %> <% } %> </p>
+    <a href="/logout"><kbd>Log out</kbd></a>
+		<div class="jumbotron text-center">
+      <p align="center"> Enter a word: </p>
+      <form action="/" method="post">
+          <input id="inputTextField" type="text" name="wordQuery" oninput="validateAlpha()" />
+
+          <input type="submit" value="Send" />
+      </form>
+    <% if (typeof  currentRequest !== 'undefined'){ if(typeof currentRequest.queryData !== 'undefined'){ %>
+        <p align="center">
+        <br> Current word is: <br> <h2> <%- currentRequest.queryData %> </h2>
+        </p>  <% }} %>
+		</div>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+
+  <p align="right"><kbd>SearchHistory</kbd></p>
+
+  <% if(typeof dbData !== 'undefined'){
+        for (var i = 0 ; i < dbData.length; i++){  %>
+          <div class="card w3-blue">
+            <div class="card-header">
+              <h1> <%- dbData[i].queryData %> </h1>
+            </div>
+            <div class="card-body">
+
+              <h5 class="card-title">  <% for (var j = 0; j < dbData[i].dataAr.length - 7; j++){ %>
+
+                <%- dbData[i].dataAr[j] %> <br>
+                <% } %> </h5>
+
+              <p class="card-text">
+                <% for (var j = 0; j < dbData[i].imageAr.length ; j++){ %>
+
+                  <img src="images/<%- dbData[i].imageAr[j] %>"  class="img-thumbnail" >
+
+                 <% } %>
+              </p>
+
+            </div>
+          </div>
+          <hr />
+
+
+        <% } } %>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+</html>

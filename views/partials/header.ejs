@@ -1,0 +1,56 @@
+<% if (typeof  currentRequest !== 'undefined'){ if(typeof currentRequest.imageAr !== 'undefined'){ %>
+<nav class="navbar navbar-inverse">
+<div class="container">
+<div class="row row-centered">
+
+  <div class="col-sm-2" id="col1">
+      <img src="images/preloader.gif"  class="img-thumbnail"  id="imgHead">
+  </div>
+  <div class="col-sm-2" id="col2">
+      <img src="images/preloader.gif"  class="img-thumbnail"  id="imgTail">
+
+  </div>
+
+  <script>
+
+    window.addEventListener('load', function(){
+            console.log("MAIN EVENT");
+            if("<%- currentRequest.imageAr[0] %>" == "Error.jpg"){
+            var elem = document.getElementById('col2');
+            elem.parentNode.removeChild(elem);
+            document.getElementById('imgHead').setAttribute('src', "images/<%- currentRequest.imageAr[0] %>");
+            }else{
+
+            var allimages = [];
+            var names = [];
+            names.push('<%- currentRequest.imageAr[0] %>');
+            names.push('<%- currentRequest.imageAr[1] %>');
+
+            document.getElementById('imgHead').setAttribute('src', "images/" + names[0]);
+            document.getElementById('imgTail').setAttribute('src', "images/" + names[1]);
+            }
+          }, false)
+  </script>
+
+
+
+    <div class="col-sm-7" >
+      <% if (typeof  currentRequest !== 'undefined'){ if(typeof currentRequest.dataAr !== 'undefined'){ %>
+
+      <p class="lead" style="color:white;font-size:20px" >
+
+      <%  console.log(currentRequest.dataAr.length);
+        if(currentRequest.dataAr.length > 2){
+            for(var i=0; i < currentRequest.dataAr.length - 5 ; i++ ){ %>
+                <%- currentRequest.dataAr[i] %> <br>
+        <% } }else{ %>
+          <%- currentRequest.dataAr[0] %> <br>
+          <%- currentRequest.dataAr[1] %> <br>
+
+      </p>
+      <% }}} %>
+    </div>
+</div>
+</div>
+</nav>
+<% } } %>
