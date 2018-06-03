@@ -34,10 +34,6 @@ app.use(session({
 
 app.use('/', routes);
 
-app.use(function(err, req, res, next){
-    console.log(err); // to see properties of message in our console
-    res.status(422).send({error: err.message});
-});
 //Слушаем указанный порт
 app.listen(port, (err) => {
     if (err) {
@@ -47,10 +43,6 @@ app.listen(port, (err) => {
 });
 
 /*
-  Идеи:
-  1) Сделать юзерам отдельную историю поиска
-  2) Lazy load
-
   Applicationhost_test
   Key: byjfmr3f8c5rgtwekzfuuhka
   Secret: pqUFG4AHEz2XwZb9qwhZPAnMBJTRw2RVFvuSC4xaE4HCU

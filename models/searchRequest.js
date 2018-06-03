@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// create ninja Schema & model
+
 const SearchItemSchema = new Schema({
     dataAr: {
         type: Array,
@@ -21,6 +21,10 @@ const SearchItemSchema = new Schema({
     queryData: {
         type: String,
         required: [true, 'Query data field is required']
+    },
+    author: {
+      type: String,
+      required: [true, 'Author field is required']
     }
     // add in geo location
 });

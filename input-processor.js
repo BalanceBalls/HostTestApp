@@ -32,7 +32,7 @@ module.exports = function(request,callback){
       if(err){
           console.log("Error loading images ---" + err);
           errMsg = "Error";
-          callback(errMsg);//предаем данные в аггрегирующую функцию async.parallel
+          callback(errMsg);//предаем данные об ошибке в аггрегирующую функцию async.parallel
         }else{
           imageResp.push(result[0]);
           imageResp.push(result[1]);
@@ -76,7 +76,7 @@ module.exports = function(request,callback){
       var completeResp = { dataAr : results[1] , imageAr : results[0], queryData : query};
 
       if (results[1].length < 3){
-        callback(true,completeResp);//Возвращаем ответ в router.js (только изображения)  | нарушение соглашения о коллбэках!
+        callback(true,completeResp);//Возвращаем ответ в router.js (только изображения)
         console.log('TYPE 1')
       }else { callback(null,completeResp);//Возвращаем ответ в router.js (предложения и изображения)
         console.log('TYPE 2');
@@ -84,5 +84,5 @@ module.exports = function(request,callback){
 
       console.log(JSON.stringify(results[0]) + '- 1 RESULT 2 - ' + JSON.stringify(results[1]));
     }
-    });
-  }
+  });
+}

@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
   //Если авторизован
   if(req.session.user){
     //Выводим из БД историю поиска
-    SearchItem.find({}).then(function(result){
+    SearchItem.find({ author : req.session.user.name }).then(function(result){
       res.render('pages/index', {dbData : result, user: req.session.user});
       });
 	} else {
@@ -30,11 +30,12 @@ router.post("/", function (request, response) {
     //Обращаемся к API
     var completeResponse = require('../input-processor')(request , function(err, apiResponse){
       //Если запрос выполнен не полностью или выполнен неудачно , не сохраняем его в БД; Выводим старые записи
-      SearchItem.find({}).then(function(result){
+      SearchItem.find({ author : request.session.user.name }).then(function(result){
         responseEntity.render('pages/index', {dbData : result , currentRequest : apiResponse, user: request.session.user});
       });
       if(!err){
         //Если запрос успешен, сохраняем результат в БД
+        apiResponse["author"] = request.session.user.name;
         SearchItem.create(apiResponse).then(function(apiResponse){
           console.log("Search query has been saved to DB");
         });
